@@ -38,7 +38,7 @@
             </div>
 
             {{-- image --}}
-            <div class="mb-3">
+            {{-- <div class="mb-3">
                 <label for="image" class="form-label">URL-Image</label>
                 <input type="url" class="form-control @error('image') is-invalid @enderror"
                 id="image" name="image" value="{{ old('image') }}">
@@ -46,6 +46,21 @@
                     @error('image')
                         <ul>
                             @foreach ($errors->get('image') as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @enderror
+                </div>
+            </div> --}}
+
+            {{-- FILE --}}
+            <div class="mb-3">
+                <label for="uploaded_img" class="form-label">Image</label>
+                <input class="form-control @error('uploaded_img') is-invalid @enderror" type="file" id="uploaded_img" name="uploaded_img">
+                <div class="invalid-feedback">
+                    @error('uploaded_img')
+                        <ul>
+                            @foreach ($errors->get('uploaded_img') as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
