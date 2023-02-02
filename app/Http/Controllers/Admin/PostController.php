@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
 
+    // 'slug' => 'required|string|max:100|unique:posts'
+    // abbiamo trasformato lo slug in un array perché
     private $validations = [
-        'slug'    => 'required|string|max:100|unique:posts',
+        'slug'    => [
+            'required',
+            'string',
+            'max:100',
+        ],
         'title'   => 'required|string|max:100',
         'image'   => 'string|max:100',
         'content' => 'string',
@@ -99,6 +106,7 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         // validation
+        $this->validations['slug'][] = Rule::unique('posts')->ignore($post);
         $request->validate($this->validations);
 
         $data = $request->all();
@@ -124,6 +132,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('admin.posts.index')->with('success_delete', $post);
     }
 }

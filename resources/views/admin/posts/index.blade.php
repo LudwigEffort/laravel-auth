@@ -1,6 +1,13 @@
 @extends('layouts.app');
 
 @section('content')
+<div class="container">
+    @if (session('success_delete'))
+        <div class="alert alert-warning" role="alert">
+            Post with id {{ session('success_delete')->id }} was delite!
+        </div>
+    @endif
+
      <table class="table table-striped">
         <thead>
             <tr>
@@ -17,18 +24,25 @@
                     <td>{{ $post->slug }}</td>
                     <td>{{ $post->title }}</td>
                     <td>
-                        <a href="{{ route('admin.posts.show', ['post' => $post]) }}" class="btn btn-primary">Visita</a>
+                        <a href="{{ route('admin.posts.show', ['post' => $post]) }}" class="btn btn-primary">Show</a>
                     </td>
                     <td>
-                        <a href="{{ route('admin.posts.edit', ['post' => $post]) }}" class="btn btn-warning">Edita</a>
+                        <a href="{{ route('admin.posts.edit', ['post' => $post]) }}" class="btn btn-warning">Edit</a>
                     </td>
-                    <td>
+                    {{-- <td>
                         <button class="btn btn-danger btn-delete-me" data-id="{{ $post->id }}">Elimina</button>
+                    </td> --}}
+                    <td>
+                        <form action="{{ route('admin.posts.destroy', ['post' => $post]) }}" method="post">
+                            @method('DELETE')
+                            @csrf
+                            <button class="btn btn-danger btn-delete-me">Delete</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-
     {{ $posts->links() }}
+</div>
 @endsection
