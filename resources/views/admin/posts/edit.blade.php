@@ -2,14 +2,16 @@
 
 @section('content')
     <div class="container">
-        <form class="row g-3 needs-validation" novalidate action="{{ route('admin.posts.store') }}" method="post">
+        <form class="row g-3 needs-validation" novalidate action="{{ route('admin.posts.update', ['post' => $post]) }}"
+        method="post">
+            @method('PUT')
             @csrf
 
             {{-- title --}}
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
                 <input type="text" class="form-control @error('title') is-invalid @enderror"
-                id="title" name="title" value="{{ old('title') }}">
+                id="title" name="title" value="{{ old('title', $post->title) }}">
                 <div class="invalid-feedback">
                     @error('title')
                         <ul>
@@ -25,7 +27,7 @@
             <div class="mb-3">
                 <label for="slug" class="form-label">Slug</label>
                 <input type="text" class="form-control @error('slug') is-invalid @enderror"
-                id="slug" name="slug" value="{{ old('slug') }}">
+                id="slug" name="slug" value="{{ old('slug', $post->slug) }}">
                 <div class="invalid-feedback">
                     @error('slug')
                         <ul>
@@ -41,7 +43,7 @@
             <div class="mb-3">
                 <label for="image" class="form-label">URL-Image</label>
                 <input type="url" class="form-control @error('image') is-invalid @enderror"
-                id="image" name="image" value="{{ old('image') }}">
+                id="image" name="image" value="{{ old('image', $post->image) }}">
                 <div class="invalid-feedback">
                     @error('image')
                         <ul>
@@ -57,7 +59,7 @@
             <div class="mb-3">
                 <label for="content" class="form-label">Content</label>
                 <textarea class="form-control @error('content') is-invalid @enderror"
-                id="content" name="content">{{ old('content') }}</textarea>
+                id="content" name="content">{{ old('content', $post->content) }}</textarea>
                 <div class="invalid-feedback">
                     @error('content')
                         <ul>
@@ -73,7 +75,7 @@
             <div class="mb-3">
                 <label for="excerpt" class="form-label">Excerpt</label>
                 <textarea class="form-control @error('excerpt') is-invalid @enderror"
-                id="excerpt" name="excerpt">{{ old('excerp') }}</textarea>
+                id="excerpt" name="excerpt">{{ old('excerpt', $post->excerpt) }}</textarea>
                 <div class="invalid-feedback">
                     @error('excerpt')
                         <ul>
@@ -86,7 +88,7 @@
             </div>
 
             <div class="col-12">
-                <button class="btn btn-primary" type="submit">Make</button>
+                <button class="btn btn-primary" type="submit">Edit</button>
             </div>
 
         </form>
