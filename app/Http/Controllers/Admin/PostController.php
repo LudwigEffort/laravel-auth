@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Post;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -61,13 +62,18 @@ class PostController extends Controller
 
         $data = $request->all();
 
+        //dd($data);
+
+        $img_path = Storage::put('uploads', $data['uploaded_img']); //ricorda di fare il chmod 777 alla cartella storage/app/public
+
         // salvare i dati nel db
         $post = new Post();
-        $post->slug    = $data['slug'];
-        $post->title   = $data['title'];
-        $post->image   = $data['image'];
-        $post->content = $data['content'];
-        $post->excerpt = $data['excerpt'];
+        $post->slug         = $data['slug'];
+        $post->title        = $data['title'];
+        $post->image        = $data['image'];
+        $post->uploaded_img = $img_path;
+        $post->content      = $data['content'];
+        $post->excerpt      = $data['excerpt'];
         $post->save();
 
         // ridirezionare (e non ritornare una view)

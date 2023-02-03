@@ -2,7 +2,8 @@
 
 @section('content')
     <div class="container">
-        <form class="row g-3 needs-validation" novalidate action="{{ route('admin.posts.store') }}" method="post">
+        <form class="row g-3 needs-validation" novalidate action="{{ route('admin.posts.store') }}"
+        method="post" enctype="multipart/form-data">
             @csrf
 
             {{-- title --}}
@@ -38,7 +39,7 @@
             </div>
 
             {{-- image --}}
-            {{-- <div class="mb-3">
+            <div class="mb-3">
                 <label for="image" class="form-label">URL-Image</label>
                 <input type="url" class="form-control @error('image') is-invalid @enderror"
                 id="image" name="image" value="{{ old('image') }}">
@@ -51,12 +52,13 @@
                         </ul>
                     @enderror
                 </div>
-            </div> --}}
+            </div>
 
             {{-- FILE --}}
             <div class="mb-3">
                 <label for="uploaded_img" class="form-label">Image</label>
-                <input class="form-control @error('uploaded_img') is-invalid @enderror" type="file" id="uploaded_img" name="uploaded_img">
+                <input class="form-control @error('uploaded_img') is-invalid @enderror"
+                type="file" id="uploaded_img" name="uploaded_img">
                 <div class="invalid-feedback">
                     @error('uploaded_img')
                         <ul>
