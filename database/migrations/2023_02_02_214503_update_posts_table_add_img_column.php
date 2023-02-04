@@ -14,7 +14,7 @@ class UpdatePostsTableAddImgColumn extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('uploaded_img', 100)->nullable()->after('image');
+            $table->string('uploaded_img', 200)->nullable()->after('image');
         });
     }
 

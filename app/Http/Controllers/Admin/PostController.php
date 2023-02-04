@@ -21,6 +21,7 @@ class PostController extends Controller
         ],
         'title'   => 'required|string|max:100',
         'image'   => 'string|max:100',
+        'uploaded_img' => 'image|max:1024',
         'content' => 'string',
         'excerpt' => 'string',
     ];
@@ -117,10 +118,14 @@ class PostController extends Controller
 
         $data = $request->all();
 
+        $img_path = Storage::put('uploads', $data['uploaded_img']);
+        Storage::delete($post->uploaded_img);
+
         // salvare i dati nel db
         $post->slug    = $data['slug'];
         $post->title   = $data['title'];
         $post->image   = $data['image'];
+        $post->uploaded_img = $img_path;
         $post->content = $data['content'];
         $post->excerpt = $data['excerpt'];
         $post->update();
